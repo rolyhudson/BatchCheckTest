@@ -26,6 +26,7 @@ namespace BatchCheckTest
                 {
                     if (Directory.Exists(path))
                     {
+                        Console.WriteLine($"Testing Datasets in {path}");
                         foreach (string f in Directory.GetFiles(path, "*.json*", SearchOption.AllDirectories))
                             RunTest(f);
                     }
@@ -33,8 +34,10 @@ namespace BatchCheckTest
                 }
             }
             Console.WriteLine($"Passes: {Passes} of {Tests} Tests.");
+
             foreach(string file in FailingDataset)
                 Console.WriteLine($"{file} did not pass.");
+
             Console.WriteLine("Press enter to end.");
             Console.ReadLine();
         }
