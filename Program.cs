@@ -14,16 +14,12 @@ namespace BatchCheckTest
         static int Passes = 0;
         static int Tests = 0;
         static List<string> FailingDataset;
-        static void Main(string[] args)
+        static void Main()
         {
             FailingDataset = new List<string>();
             BH.Engine.Reflection.Compute.LoadAllAssemblies();
-            string folders = BH.Engine.Reflection.Query.BHoMFolder()+ "\\FoldersContainingUnitTests.txt";
 
-            if (args.Length != 0)
-                folders = args[0];
-
-            using (StreamReader sr = new StreamReader(folders))
+            using (StreamReader sr = new StreamReader("FoldersContainingUnitTests.txt"))
             {
                 string path = sr.ReadLine();
                 while (path != null)
