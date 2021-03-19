@@ -4,7 +4,6 @@ using System;
 using System.IO;
 using serialiser = BH.Engine.Serialiser;
 using BH.Engine.UnitTest;
-using BH.Engine.Reflection;
 using System.Collections.Generic;
 
 namespace BatchCheckTest
@@ -14,12 +13,19 @@ namespace BatchCheckTest
         static int Passes = 0;
         static int Tests = 0;
         static List<string> FailingDataset;
-        static void Main()
+        static void Main(string[] args)
         {
+            
+            if(args.Length ==0 || !File.Exists(args[0]))
+            {
+                Console.WriteLine("Please provide the path to a text file with the folders to search for unit test datasets.");
+                return;
+            }
+
             FailingDataset = new List<string>();
             BH.Engine.Reflection.Compute.LoadAllAssemblies();
 
-            using (StreamReader sr = new StreamReader("FoldersContainingUnitTests.txt"))
+            using (StreamReader sr = new StreamReader(args[0]))
             {
                 string path = sr.ReadLine();
                 while (path != null)
@@ -33,6 +39,7 @@ namespace BatchCheckTest
                     path = sr.ReadLine();
                 }
             }
+
             Console.WriteLine($"Passes: {Passes} of {Tests} Tests.");
 
             foreach(string file in FailingDataset)
